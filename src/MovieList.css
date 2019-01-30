@@ -1,0 +1,35 @@
+.wrapper {
+    background: #e68a3e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    border-spacing: 0px;
+    width: 100%;
+}
+
+th {
+    text-align: start;
+    padding: 5px;
+    color: #443635;
+}
+
+td {
+    padding: 5px;
+    max-width: 700px;
+    vertical-align: top;
+    color: #443635;
+}
+
+tbody > tr:nth-child(even){
+    background: #8ec0e8;
+}
+
+tbody > tr:nth-child(odd){
+    background: #f9f778;
+}
+h1 {
+    color: #443635
+}
