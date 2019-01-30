@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import { getMovieList } from './api';
+import './MovieList.css';
 
 class MovieList extends Component{
     constructor(props) {
         super(props);
-        this.state = {movies: [] };
+        this.state = {
+            movies: [],
+            filters: {
+                title: '',
+                description: '',
+                director: '',
+                producer: '',
+            }
+         };
     }
 
     componentDidMount(){
@@ -16,7 +25,7 @@ class MovieList extends Component{
     render() {
         const { movies } = this.state;
         return (
-            <div>
+            <div className="wrapper">
                 <h1>Ghibli movies</h1>
                 <table>
                     <thead>
@@ -34,8 +43,8 @@ class MovieList extends Component{
                         <td>{description}</td>
                         <td>{director}</td>
                         <td>{producer}</td>
-                        <td>{release_date}</td>
-                        <td>{rt_score}</td>
+                        <td className="number">{release_date}</td>
+                        <td className="number">{rt_score}</td>
                         </tr>)}
 
                     </tbody>
