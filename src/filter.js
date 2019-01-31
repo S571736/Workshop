@@ -1,7 +1,9 @@
 import React from 'react';
+import './filter.css';
 
 const Filter = ({ filterKey, placeholder, value, onChange}) =>
 <input
+    className = "filter"
     type = "search"
     placeholder = {placeholder}
     value = {value}
