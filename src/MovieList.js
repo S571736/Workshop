@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { getMovieList } from './api';
+import Filter from './Filter.js';
 import './MovieList.css';
 
 class MovieList extends Component{
@@ -22,8 +23,25 @@ class MovieList extends Component{
         })
     }
 
+    handleFilters = (key, event) => {
+        const value = event.target.value;
+        this.setState(({ filters }) => ({ filters: { ...filters, [key]: value} }))
+    }
+
+    filterMovies = () => {
+        const { movies, filters } = this.state;
+        const activeFilterKeys = Object.keys(filters).filter(key => filters[key] !== '');
+        if(activeFilterKeys.length === 0){
+            return movies;
+        }
+        return movies.filter((movie) => 
+            activeFilterKeys.every(key => movie[key].toLowerCase().includes(filters[key].toLowerCase()))
+        )
+    }
+
     render() {
-        const { movies } = this.state;
+        const { movies, filters } = this.state;
+        const filteredMovies = this.filterMovies(movies);
         return (
             <div className="wrapper">
                 <h1>Ghibli movies</h1>
@@ -37,8 +55,15 @@ class MovieList extends Component{
                             <th>Release year</th>
                             <th>Score (Rotten Tomatoes)</th>
                         </tr>
+                        <tr>
+                                <th><Filter placeholder="Filter by title" filterKey="title" value={filters.title} onChange={this.handleFilters}/></th>
+                                <th><Filter placeholder="Filter by description" filterKey="description" value={filters.description} onChange={this.handleFilters}/></th>
+                                <th><Filter placeholder="Filter by director" filterKey="director" value={filters.director} onChange={this.handleFilters}/></th>
+                                <th><Filter placeholder="Filter by producer" filterKey="producer" value={filters.producer} onChange={this.handleFilters}/></th>
+                        </tr>
                     </thead>
-                    <tbody>{movies.map(({ id, title, description, director, producer, release_date, rt_score }) => <tr key={id}>)}
+                    <tbody>
+                    {filteredMovies.map(({ id, title, description, director, producer, release_date, rt_score }) => <tr key={id}>)}
                         <td>{title}</td>
                         <td>{description}</td>
                         <td>{director}</td>
@@ -46,7 +71,6 @@ class MovieList extends Component{
                         <td className="number">{release_date}</td>
                         <td className="number">{rt_score}</td>
                         </tr>)}
-
                     </tbody>
                 </table>
                 <div>

@@ -33,3 +33,7 @@ tbody > tr:nth-child(odd){
 h1 {
     color: #443635
 }
+
+.number{
+    text-align: center;
+}
